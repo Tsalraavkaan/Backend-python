@@ -161,17 +161,19 @@ class TicTac:
                 self.write_message = False
                 pygame.display.update()
 
-
-if __name__ == "__main__":
-    try:
-        size = int(input("Input width from 3 to 6 of your tictac " +
-                         "field or press Enter for choosing default: "))
-    except ValueError:
-        size = 3
-    if size < 3:
-        size = 3
-    elif size > 6:
-        size = 6
+def run_game(size):
     pygame.font.init()
     sc = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     Game = TicTac(sc, size)
+
+
+
+if __name__ == "__main__":
+    size = input("Input width from 3 to 6 of your tictac " +
+                 "field or press Enter for choosing default: ")
+    if not size.isdigit() or size < "3":
+        size = 3
+    elif size > "6":
+        size = 6
+    size = int(size)
+    run_game(size)
