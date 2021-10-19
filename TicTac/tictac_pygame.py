@@ -161,11 +161,11 @@ class TicTac:
                 self.write_message = False
                 pygame.display.update()
 
+
 def run_game(size):
     pygame.font.init()
     sc = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-    Game = TicTac(sc, size)
-
+    TicTac(sc, size)
 
 
 if __name__ == "__main__":
