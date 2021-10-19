@@ -56,23 +56,28 @@ class GameClass():
             else:
                 print("Incorrect input. Please try again")
 
-    def __init__(self, size):
+    def __init__(self, size, mode=None):
         """Initialise of game."""
-        line = input("Game have 2 mods:\n" +
-                     "Input 1 to play in console mode\n" +
-                     "Input 2 to play in graphic mode\n")
-        if line == "1":
-            self.size = size
+        if not mode:
+            mode = int(input("Game have 2 mods:\n" +
+                             "Input 1 to play in console mode\n" +
+                             "Input 2 to play in graphic mode\n"))
+        self.size = size
+        self.mode = mode
+
+    def game(self):
+        """Start loop."""
+        if self.mode == 1:
             game_end = False
             while not game_end:
                 self.start()
                 self.game_loop()
                 game_end = self.end()
-        elif line == "2":
-            run_game(size)
+        elif self.mode == 2:
+            run_game(self.size)
 
     def start(self):
-        """Start configuration of game."""
+        """Configure game."""
         self.field = [[0] * self.size for _ in range(self.size)]
         self.turn = 0
         self.game_over = False
@@ -125,4 +130,4 @@ if __name__ == "__main__":
     elif size > "6":
         size = 6
     size = int(size)
-    GameClass(size)
+    GameClass(size).game()
