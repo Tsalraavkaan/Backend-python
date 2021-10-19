@@ -2,59 +2,59 @@
 from tictac_pygame import run_game
 
 
-def check_winner(field, turn, size):
-    """Check win or draw."""
-    main_diag = field[0][0]
-    rev_diag = field[0][size - 1]
-    for main_ind in range(size):
-        if main_diag != field[main_ind][main_ind]:
-            main_diag = 0
-        if rev_diag != field[main_ind][size - main_ind - 1]:
-            rev_diag = 0
-        row = field[0][main_ind]
-        col = field[main_ind][0]
-        for ind in range(size):
-            if row != field[ind][main_ind]:
-                row = 0
-            if col != field[main_ind][ind]:
-                col = 0
-        if row != 0:
-            return row
-        if col != 0:
-            return col
-    if main_diag != 0:
-        return main_diag
-    if rev_diag != 0:
-        return rev_diag
-    if turn == size * size:
-        return 3
-
-
-def input_coords(line, size):
-    """Corrects input of x and y."""
-    answer = False
-    line = line.split()
-    if len(line) != 2:
-        print("Incorrect input. Please try again")
-    else:
-        y, x = line
-        if x.isdigit() and y.isdigit():
-            x, y = int(x) - 1, int(y) - 1
-            if x >= size or y >= size:
-                print("One of your coordinats is more than field size.",
-                      "Please try again")
-            elif x < 0 or y < 0:
-                print("One of your coordinats is less than 1.",
-                      "Please try again")
-            else:
-                answer = (x, y)
-        else:
-            print("Incorrect input. Please try again")
-    return answer
-
-
 class GameClass():
     """Game class."""
+
+    FIRST = 1
+    SECOND = 2
+    DRAW = 3
+
+    def check_winner(self):
+        """Check win or draw."""
+        main_diag = self.field[0][0]
+        rev_diag = self.field[0][self.size - 1]
+        for main_ind in range(self.size):
+            if main_diag != self.field[main_ind][main_ind]:
+                main_diag = 0
+            if rev_diag != self.field[main_ind][self.size - main_ind - 1]:
+                rev_diag = 0
+            row = self.field[0][main_ind]
+            col = self.field[main_ind][0]
+            for ind in range(self.size):
+                if row != self.field[ind][main_ind]:
+                    row = 0
+                if col != self.field[main_ind][ind]:
+                    col = 0
+            if row != 0:
+                return row
+            if col != 0:
+                return col
+        if main_diag != 0:
+            return main_diag
+        if rev_diag != 0:
+            return rev_diag
+        if self.turn == self.size * self.size:
+            return GameClass.DRAW
+
+    def input_coords(self, line):
+        """Corrects input of x and y."""
+        line = line.split()
+        if len(line) != 2:
+            print("Incorrect input. Please try again")
+        else:
+            y, x = line
+            if x.isdigit() and y.isdigit():
+                x, y = int(x) - 1, int(y) - 1
+                if x >= self.size or y >= self.size:
+                    print("One of your coordinats is more than field size.",
+                          "Please try again")
+                elif x < 0 or y < 0:
+                    print("One of your coordinats is less than 1.",
+                          "Please try again")
+                else:
+                    return (x, y)
+            else:
+                print("Incorrect input. Please try again")
 
     def __init__(self, size):
         """Initialise of game."""
@@ -79,11 +79,11 @@ class GameClass():
 
     def end(self):
         """End events in game."""
-        if self.game_over == 1:
+        if self.game_over == GameClass.FIRST:
             text = "First player wins."
-        elif self.game_over == 2:
+        elif self.game_over == GameClass.SECOND:
             text = "Second player wins."
-        elif self.game_over == 3:
+        elif self.game_over == GameClass.DRAW:
             text = "Draw."
         line = input(text + " To end game input 1.\n" +
                      "To restart input something another: ")
@@ -105,14 +105,14 @@ class GameClass():
                 line = input("Input x and y of matrix " +
                              "(left upper conner have " +
                              "x=1, y=1 coords): ")
-                correct_input = input_coords(line, self.size)
+                correct_input = self.input_coords(line)
             x, y = correct_input
             if self.field[x][y] != 0:
                 print("This cell is taken. Please input coords of empty cell")
                 continue
             self.field[x][y] = self.turn % 2 + 1
             self.turn += 1
-            self.game_over = check_winner(self.field, self.turn, self.size)
+            self.game_over = self.check_winner()
         return self.game_over
 
 
