@@ -1,6 +1,7 @@
 """Tests for tictactoe."""
 import sys
 import unittest
+from unittest.mock import patch
 from tictac_release import GameClass
 
 
@@ -8,7 +9,6 @@ class TestGame(unittest.TestCase):
     """Test class."""
 
     def setUp(self):
-        sys.stdout, self.temp = None, sys.stdout
         self.game = GameClass(3, 1)
 
     def test_rev_diag(self):
@@ -49,32 +49,35 @@ class TestGame(unittest.TestCase):
         game.turn = 23
         self.assertEqual(game.check_winner(), 1)
 
-    def test_incorrect_coords(self):
+    @patch('sys.stdout')
+    def test_incorrect_coords(self, mock_stdout):
         """Check big coords."""
         self.assertFalse(self.game.input_coords("4 2"))
 
-    def test_incorrect_coords2(self):
+    @patch('sys.stdout')
+    def test_incorrect_coords2(self, mock_stdout):
         """Check small coords."""
         self.assertFalse(self.game.input_coords("-2 2"))
 
-    def test_incorrect_coords3(self):
+    @patch('sys.stdout')
+    def test_incorrect_coords3(self, mock_stdout):
         """Check amount coords."""
         self.assertFalse(self.game.input_coords("2 2 2"))
 
-    def test_incorrect_coords4(self):
+    @patch('sys.stdout')
+    def test_incorrect_coords4(self, mock_stdout):
         """Check amount coords."""
         self.assertFalse(self.game.input_coords("2"))
 
-    def test_incorrect_coords5(self):
+    @patch('sys.stdout')
+    def test_incorrect_coords5(self, mock_stdout):
         """Check not digits."""
         self.assertFalse(self.game.input_coords("a b"))
 
-    def test_correct_coords(self):
+    @patch('sys.stdout')
+    def test_correct_coords(self, mock_stdout):
         """Check for correct input."""
         self.assertEqual(self.game.input_coords("2 2"), (1, 1))
-
-    def tearDown(self):
-        sys.stdout = self.temp
 
 
 if __name__ == "__main__":
