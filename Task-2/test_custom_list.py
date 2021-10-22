@@ -39,6 +39,13 @@ class TestList(unittest.TestCase):
         self.assertTrue(self.lst < d)
         self.assertFalse(c <= b)
 
+    def test_return_value(self):
+        a = CustomList([5, 5, 5, 5, 5])
+        self.assertEqual(type(self.lst + a), CustomList)
+        self.assertEqual(type(a + self.lst), CustomList)
+        self.assertEqual(type(self.lst - a), CustomList)
+        self.assertEqual(type(a - self.lst), CustomList)
+
 
 if __name__ == "__main__":
     unittest.main()

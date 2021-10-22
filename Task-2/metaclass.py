@@ -2,10 +2,10 @@ class CustomMeta(type):
     def __new__(metaclass, future_class_name,
                 future_class_parents, future_class_attr):
         attrs = ((name, value) for name, value in future_class_attr.items()
-                 if not name.startswith('__'))
+                 if not name.startswith("__"))
         new_attrs = dict(("custom_" + name, value) for name, value in attrs)
         for name, value in future_class_attr.items():
-            if name.startswith('__'):
+            if name.startswith("__") and name[-2:] == ("__"):
                 new_attrs[name] = value
         new_attrs["__setattr__"] = CustomMeta.setattr
         return type.__new__(metaclass, future_class_name,
