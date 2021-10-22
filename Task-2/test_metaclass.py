@@ -15,6 +15,9 @@ class CustomClass(metaclass=CustomMeta):
     def __add__(self, other):
         return self.custom_val + other.custom_val
 
+    def not_magic_str__(self):
+        return str(self.custom_val)
+
 
 class TestList(unittest.TestCase):
     def setUp(self):
@@ -43,6 +46,14 @@ class TestList(unittest.TestCase):
         """Test magic methods."""
         obj = CustomClass(12)
         self.assertEqual(self.inst + obj, 111)
+
+    def test_not_magic_methods(self):
+        """Test not magic methods ended with "__"."""
+        self.assertEqual(self.inst.custom_not_magic_str__(),
+                         str(self.inst.custom_val))
+        with self.assertRaises(AttributeError):
+            self.assertEqual(self.inst.not_magic_str__(),
+                             str(self.inst.custom_val))
 
 
 if __name__ == "__main__":
