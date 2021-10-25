@@ -33,4 +33,4 @@ $ pip install -r requirements.txt
 `127.0.0.1:8000/aaa/bb?c=11&d=17`
 
 ### Test server
-'ab -c 4 -n 5000 http://127.0.0.1:8000/api/aaaa'
+`ab -c 4 -n 5000 http://127.0.0.1:8000/api/aaaa`
