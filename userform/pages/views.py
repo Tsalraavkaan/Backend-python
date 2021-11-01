@@ -38,4 +38,6 @@ def form(request):
     else:
         raise Http404
 def info(request):
-    return render(request,  "data_all.html", USER_BASE)
+    if USER_BASE["surname"] != []:
+        return render(request,  "data_all.html", USER_BASE)
+    return render(request,  "empty_table.html", USER_BASE)
