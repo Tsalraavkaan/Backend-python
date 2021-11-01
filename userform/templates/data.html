@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{name}} data{% endblock title %}
+{% block header %}Добро пожаловать, {{surname}} {{name}}!{% endblock header %}
+{% block line %}Ваша информация:{% endblock line %}
+{% block line2 %}
+<p>Фамилия: {{surname}}</p>
+<p>Имя: {{name}}</p>
+<p>Возраст: {{age}}</p>
+<p>Место учебы: {{study}}</p>
+<p>Электронная почта: {{email}}</p>
+{% endblock line2 %}

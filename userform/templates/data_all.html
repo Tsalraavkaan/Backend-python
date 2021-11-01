@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}All data{% endblock title %}
+{% block line %}Список всех данных{% endblock line %}
+{% block line2 %}
+<table>
+  <tbody>
+    <tr>
+      <td>Фамилия</td>
+      {% for elem in surname %}
+        <td> {{ elem }} </td>
+      {% endfor %}
+    </tr>
+    <tr>
+      <td>Имя</td>
+      {% for elem in name %}
+        <td> {{ elem }} </td>
+      {% endfor %}
+    </tr>
+    <tr>
+      <td>Возраст</td>
+      {% for elem in age %}
+        <td> {{ elem }} </td>
+      {% endfor %}
+    </tr>
+    <tr>
+      <td>Место учебы</td>
+      {% for elem in study %}
+        <td> {{ elem }} </td>
+      {% endfor %}
+    </tr>
+    <tr>
+      <td>Электронная почта</td>
+      {% for elem in email %}
+        <td> {{ elem }} </td>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+{% endblock line2 %}
